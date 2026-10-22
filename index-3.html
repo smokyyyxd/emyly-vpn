@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#17091f">
+  <title>Emyly VPN — свобода в сети</title>
+  <meta name="description" content="Emyly VPN — быстрый и удобный VPN. Попробуй бесплатно 10 дней, затем всего 25 ₽ в месяц.">
+  <style>
+    :root {
+      --bg: #100817;
+      --panel: rgba(34, 13, 44, .76);
+      --red: #ff3159;
+      --purple: #9d4dff;
+      --pink: #ff5d9e;
+      --text: #fff7ff;
+      --muted: #c7b5d0;
+      --border: rgba(224, 137, 255, .19);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 12% 15%, rgba(255, 39, 83, .20), transparent 38%),
+        radial-gradient(ellipse at 88% 28%, rgba(143, 49, 255, .23), transparent 40%),
+        radial-gradient(ellipse at 50% 90%, rgba(255, 49, 89, .12), transparent 45%),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed; inset: 0; pointer-events: none; opacity: .18;
+      background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: auto; }
+    header {
+      position: relative; z-index: 2; display: flex; align-items: center;
+      justify-content: space-between; padding: 22px 0;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 850; letter-spacing: -.5px; font-size: 21px; }
+    .logo {
+      width: 42px; height: 42px; border-radius: 14px; display: grid; place-items: center;
+      background: linear-gradient(135deg, var(--red), var(--purple));
+      box-shadow: 0 0 28px rgba(185, 59, 255, .28); font-size: 21px;
+    }
+    nav { display: flex; align-items: center; gap: 28px; color: var(--muted); font-size: 14px; }
+    nav a:hover { color: white; }
+    .nav-cta, .button {
+      border: 0; cursor: pointer; color: white; font-weight: 750; border-radius: 14px;
+      background: linear-gradient(110deg, var(--red), var(--purple));
+      box-shadow: 0 8px 28px rgba(181, 45, 255, .22);
+      transition: transform .2s, filter .2s, box-shadow .2s;
+    }
+    .nav-cta { padding: 12px 17px; }
+    .button { display: inline-flex; justify-content: center; align-items: center; padding: 16px 23px; font-size: 15px; min-height: 52px; }
+    .button:hover, .nav-cta:hover { transform: translateY(-2px); filter: brightness(1.1); box-shadow: 0 12px 34px rgba(255, 49, 89, .24); }
+    .button.secondary { background: rgba(255,255,255,.045); border: 1px solid var(--border); box-shadow: none; }
+    .hero { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; gap: 55px; align-items: center; padding: 82px 0 90px; }
+    .pill { display: inline-flex; align-items: center; gap: 9px; border: 1px solid var(--border); background: rgba(120, 50, 150, .13); color: #f1cfff; padding: 9px 13px; border-radius: 999px; font-size: 12px; font-weight: 750; letter-spacing: .8px; text-transform: uppercase; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: #ff4b79; box-shadow: 0 0 12px #ff4b79; }
+    h1 { font-size: clamp(44px, 6vw, 76px); line-height: .99; letter-spacing: -3.8px; margin: 24px 0 22px; }
+    .gradient-text { background: linear-gradient(100deg, #ff526d 5%, #d45bff 62%, #a78bff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lead { color: var(--muted); font-size: 17px; line-height: 1.8; max-width: 540px; margin: 0 0 30px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .small-note { color: #9d89a8; font-size: 12px; margin-top: 18px; }
+    .visual { min-height: 390px; display: grid; place-items: center; position: relative; }
+    .orb { position: absolute; width: 290px; height: 290px; border-radius: 50%; background: linear-gradient(135deg, rgba(255,49,89,.25), rgba(139,61,255,.18)); filter: blur(12px); }
+    .vpn-card {
+      position: relative; width: min(100%, 360px); padding: 26px; border: 1px solid rgba(236, 159, 255, .26);
+      border-radius: 28px; background: linear-gradient(145deg, rgba(54,22,66,.91), rgba(22,10,33,.93));
+      box-shadow: 0 30px 90px rgba(0,0,0,.35), inset 0 1px rgba(255,255,255,.07);
+      transform: rotate(2deg); animation: float 5s ease-in-out infinite;
+    }
+    @keyframes float { 0%,100% { transform: translateY(0) rotate(2deg); } 50% { transform: translateY(-10px) rotate(0deg); } }
+    .card-top { display: flex; justify-content: space-between; align-items: center; color: var(--muted); font-size: 13px; }
+    .status { color: #9dffca; font-size: 12px; display: flex; align-items: center; gap: 7px; }
+    .status::before { content:""; width: 7px; height: 7px; border-radius:50%; background:#56ff9a; box-shadow:0 0 12px #56ff9a; }
+    .shield { margin: 30px auto 23px; width: 112px; height: 125px; display:grid; place-items:center; font-size: 56px; color: white; clip-path: polygon(50% 0, 91% 16%, 86% 65%, 50% 100%, 14% 65%, 9% 16%); background: linear-gradient(145deg, #ff3f68, #873bff); filter: drop-shadow(0 0 22px rgba(202,59,255,.3)); }
+    .card-title { text-align:center; font-size:22px; font-weight:800; }
+    .card-sub { text-align:center; color:var(--muted); font-size:13px; margin-top:8px; }
+    .fake-line { height: 7px; border-radius: 99px; background: rgba(255,255,255,.08); margin-top: 24px; overflow:hidden; }
+    .fake-line span { display:block; width:74%; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--red),var(--purple)); }
+    .mini-stats { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:17px; }
+    .stat { background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,.055); border-radius:13px; padding:12px; }
+    .stat strong { display:block; font-size:16px; }
+    .stat small { display:block; color:var(--muted); font-size:11px; margin-top:4px; }
+    section { padding: 62px 0; position:relative; }
+    .section-head { text-align:center; max-width:650px; margin:0 auto 36px; }
+    .eyebrow { color:#e2a4ff; text-transform:uppercase; letter-spacing:2px; font-size:11px; font-weight:800; }
+    h2 { font-size:clamp(30px,4vw,44px); letter-spacing:-1.6px; margin:13px 0; }
+    .section-head p { color:var(--muted); line-height:1.7; margin:0; }
+    .features { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .feature { padding:25px; border:1px solid var(--border); border-radius:21px; background:linear-gradient(145deg,rgba(63,23,75,.52),rgba(24,10,35,.72)); }
+    .feature-icon { width:45px; height:45px; border-radius:14px; display:grid; place-items:center; font-size:22px; background:linear-gradient(135deg,rgba(255,49,89,.22),rgba(157,77,255,.27)); margin-bottom:19px; }
+    .feature h3 { margin:0 0 9px; font-size:17px; }
+    .feature p { color:var(--muted); font-size:13px; line-height:1.7; margin:0; }
+    .pricing { display:grid; grid-template-columns:1fr 1fr; gap:17px; max-width:780px; margin:auto; }
+    .price-card { border:1px solid var(--border); border-radius:24px; padding:29px; background:rgba(35,13,47,.7); }
+    .price-card.featured { border-color:rgba(213,93,255,.55); background:linear-gradient(145deg,rgba(94,28,90,.62),rgba(32,12,45,.85)); box-shadow:0 20px 65px rgba(157,77,255,.11); }
+    .price-card h3 { margin:0; font-size:18px; }
+    .price { font-size:43px; font-weight:900; letter-spacing:-2px; margin:17px 0 5px; }
+    .price span { font-size:14px; font-weight:500; letter-spacing:0; color:var(--muted); }
+    .price-desc { color:var(--muted); font-size:13px; line-height:1.7; min-height:45px; }
+    .price-card ul { list-style:none; padding:0; margin:22px 0; display:grid; gap:12px; color:#eadff0; font-size:13px; }
+    .price-card li::before { content:"✓"; color:#ff739a; font-weight:900; margin-right:9px; }
+    .price-card .button { width:100%; }
+    .faq { max-width:760px; margin:auto; display:grid; gap:12px; }
+    details { border:1px solid var(--border); border-radius:16px; background:rgba(36,13,46,.56); padding:18px 20px; }
+    summary { cursor:pointer; font-weight:750; }
+    details p { color:var(--muted); font-size:14px; line-height:1.7; margin-bottom:0; }
+    .bottom-cta { text-align:center; border:1px solid var(--border); border-radius:28px; padding:48px 22px; background:radial-gradient(ellipse at top left,rgba(255,49,89,.15),transparent 50%),radial-gradient(ellipse at bottom right,rgba(157,77,255,.2),transparent 50%),rgba(32,11,43,.65); }
+    .bottom-cta p { color:var(--muted); margin:0 auto 24px; max-width:490px; line-height:1.7; }
+    footer { border-top:1px solid rgba(255,255,255,.07); padding:25px 0 35px; margin-top:65px; display:flex; gap:20px; justify-content:space-between; align-items:center; color:#9f8ca9; font-size:12px; }
+    .footer-brand { color:#f8eaff; font-weight:800; font-size:14px; }
+    .toast { position:fixed; z-index:10; bottom:22px; left:50%; transform:translate(-50%,20px); opacity:0; pointer-events:none; background:#2b1239; border:1px solid var(--border); color:white; padding:13px 17px; border-radius:13px; box-shadow:0 10px 40px #0007; transition:.25s; width:max-content; max-width:calc(100% - 30px); font-size:13px; text-align:center; }
+    .toast.show { opacity:1; transform:translate(-50%,0); }
+    @media (max-width:800px) {
+      nav a:not(.nav-cta) { display:none; }
+      .hero { grid-template-columns:1fr; gap:20px; padding:50px 0 45px; }
+      .visual { min-height:340px; }
+      .features { grid-template-columns:1fr; }
+      .feature { display:grid; grid-template-columns:45px 1fr; column-gap:15px; }
+      .feature-icon { grid-row:span 2; margin:0; }
+      .feature h3 { align-self:end; }
+      .pricing { grid-template-columns:1fr; }
+      h1 { letter-spacing:-2.5px; }
+    }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation:none !important; scroll-behavior:auto !important; transition:none !important; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="#top" aria-label="Emyly VPN — главная">
+        <span class="logo">✦</span><span>Emyly <span class="gradient-text">VPN</span></span>
+      </a>
+      <nav aria-label="Основная навигация">
+        <a href="#features">Преимущества</a>
+        <a href="#pricing">Цены</a>
+        <a href="#faq">Вопросы</a>
+        <a class="nav-cta" href="#pricing">Попробовать</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <div class="hero">
+        <div>
+          <div class="pill"><span class="dot"></span> Твоя сеть. Твои правила.</div>
+          <h1>Интернет без<br><span class="gradient-text">лишних границ.</span></h1>
+          <p class="lead">Знакомься с Emyly VPN — подключайся к своему цифровому пространству. Начни с 10 дней пробного доступа, а затем продолжай всего за 25 ₽ в месяц.</p>
+          <div class="actions">
+            <a class="button" href="#pricing">Начать бесплатно <span aria-hidden="true">&nbsp;↗</span></a>
+            <a class="button secondary" href="#features">Узнать больше</a>
+          </div>
+          <p class="small-note">10 дней пробного периода · Далее 25 ₽/месяц</p>
+        </div>
+        <div class="visual" aria-label="Иллюстрация VPN-подключения">
+          <div class="orb"></div>
+          <div class="vpn-card">
+            <div class="card-top"><span>EMYLY NETWORK</span><span class="status">Защита включена</span></div>
+            <div class="shield">✦</div>
+            <div class="card-title">Ты подключён</div>
+            <div class="card-sub">Твоё соединение. Твои правила.</div>
+            <div class="fake-line"><span></span></div>
+            <div class="mini-stats">
+              <div class="stat"><strong>Emyly</strong><small>Твоя сеть</small></div>
+              <div class="stat"><strong>10 дней</strong><small>Пробный доступ</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="features">
+        <div class="section-head">
+          <div class="eyebrow">Почему Emyly</div>
+          <h2>Всё просто. Без лишнего.</h2>
+          <p>Понятный старт, доступная цена и оформление в твоём стиле.</p>
+        </div>
+        <div class="features">
+          <article class="feature">
+            <div class="feature-icon">⚡</div>
+            <h3>Простой старт</h3>
+            <p>Начни пользоваться сервисом без сложных инструкций — когда подключение будет настроено.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon">🛡️</div>
+            <h3>Приватность важна</h3>
+            <p>VPN может защищать трафик в пути, но не делает тебя полностью невидимым в интернете.</p>
+          </article>
+          <article class="feature">
+            <div class="feature-icon">✦</div>
+            <h3>Доступная цена</h3>
+            <p>После пробного периода подписка стоит всего 25 рублей в месяц.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="pricing">
+        <div class="section-head">
+          <div class="eyebrow">Тарифы</div>
+          <h2>Попробуй сам</h2>
+          <p>Выбери подходящий вариант. Кнопки пока демонстрационные — подключи свою систему оплаты или бота.</p>
+        </div>
+        <div class="pricing">
+          <article class="price-card featured">
+            <div class="pill">Для новых пользователей</div>
+            <h3 style="margin-top:18px">Пробный период</h3>
+            <div class="price">0 ₽ <span>/ 10 дней</span></div>
+            <p class="price-desc">Ознакомься с Emyly VPN перед покупкой подписки.</p>
+            <ul>
+              <li>10 дней пробного доступа</li>
+              <li>Без оплаты в этом макете</li>
+              <li>Дальше — 25 ₽ в месяц</li>
+            </ul>
+            <button class="button" type="button" data-message="Пробный период ещё нужно подключить к системе выдачи доступа.">Начать пробный период</button>
+          </article>
+          <article class="price-card">
+            <h3>Месячная подписка</h3>
+            <div class="price">25 ₽ <span>/ месяц</span></div>
+            <p class="price-desc">Небольшая цена за месяц пользования сервисом.</p>
+            <ul>
+              <li>30 дней подписки</li>
+              <li>Понятная стоимость</li>
+              <li>Продление после оплаты</li>
+            </ul>
+            <button class="button secondary" type="button" data-message="Сюда можно добавить ссылку на оплату или твоего Telegram-бота.">Оформить подписку</button>
+          </article>
+        </div>
+      </section>
+
+      <section id="faq">
+        <div class="section-head">
+          <div class="eyebrow">FAQ</div>
+          <h2>Частые вопросы</h2>
+        </div>
+        <div class="faq">
+          <details>
+            <summary>Сколько стоит Emyly VPN?</summary>
+            <p>После пробного периода цена составляет 25 ₽ в месяц.</p>
+          </details>
+          <details>
+            <summary>Как долго длится пробный период?</summary>
+            <p>10 дней. Для автоматической выдачи доступа потребуется связать сайт с сервером или ботом VPN.</p>
+          </details>
+          <details>
+            <summary>Можно ли оплатить прямо на сайте?</summary>
+            <p>Пока нет: это готовая стартовая страница. Для реальных платежей нужно подключить платёжного провайдера и серверную часть. Не размещай секретные ключи оплаты в HTML.</p>
+          </details>
+        </div>
+      </section>
+
+      <section>
+        <div class="bottom-cta">
+          <div class="eyebrow">Emyly VPN</div>
+          <h2>Твой интернет начинается здесь.</h2>
+          <p>Красный. Фиолетовый. Твой стиль. Присоединяйся к Emyly VPN.</p>
+          <a class="button" href="#pricing">Выбрать тариф ↗</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div><div class="footer-brand">✦ Emyly VPN</div><div style="margin-top:6px">Твоя сеть. Твои правила.</div></div>
+      <div>© <span id="year"></span> Emyly VPN</div>
+    </footer>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const toast = document.getElementById("toast");
+    let toastTimer;
+    document.querySelectorAll("[data-message]").forEach(button => {
+      button.addEventListener("click", () => {
+        toast.textContent = button.dataset.message;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 4200);
+      });
+    });
+  </script>
+</body>
+</html>
